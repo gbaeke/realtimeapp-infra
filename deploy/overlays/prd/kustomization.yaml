@@ -27,3 +27,4 @@ replicas:
   name: realtime
 images:
 - name: gbaeke/flux-rt
+  newTag: 1.0.0
