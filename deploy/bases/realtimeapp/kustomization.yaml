@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- realtime.yaml
+- redis.yaml
+
+vars:
+- name: REDISSERVICE
+  objref:
+    kind: Service
+    name: redis
+    apiVersion: v1
+- name: REDISNAMESPACE
+  objref:
+    kind: Service
+    name: redis
+    apiVersion: v1
+  fieldref:
+    fieldpath: metadata.namespace

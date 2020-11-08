@@ -1,0 +1,53 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: myns
+namePrefix: dev-
+nameSuffix: "-001"
+
+resources:
+- namespace.yaml
+- realtime.yaml
+- redis.yaml
+
+configMapGenerator:
+- name: test-configmap
+  behavior: create
+  envs:
+  - app.config
+
+secretGenerator:
+- name: test-secret
+  behavior: create
+  envs:
+  - app.secret
+
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    added.label: silly
+  annotations:
+    added.annotation: silly
+
+
+vars:
+- name: REDISSERVICE
+  objref:
+    kind: Service
+    name: redis
+    apiVersion: v1
+- name: REDISNAMESPACE
+  objref:
+    kind: Service
+    name: redis
+    apiVersion: v1
+  fieldref:
+    fieldpath: metadata.namespace
+
+replicas:
+- name: realtime
+  count: 3
+
+images:
+- name: gbaeke/fluxapp
+  newTag: 1.0.0

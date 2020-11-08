@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: realtime-prd
+nameSuffix: -prd
+resources:
+- ../../bases/realtimeapp
+- namespace.yaml
+transformers:
+- labels.yaml
+patchesStrategicMerge:
+- |
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: realtime
+  spec:
+    template:
+      spec:
+        containers:
+          - name: realtime
+            resources:
+              requests:
+                cpu: 150m
+                memory: 150Mi
+replicas:
+- count: 3
+  name: realtime
+images:
+- name: gbaeke/flux-rt
+  newTag: 1.0.0
