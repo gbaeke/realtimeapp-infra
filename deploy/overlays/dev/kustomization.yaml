@@ -12,4 +12,4 @@ replicas:
   name: realtime
 images:
 - name: gbaeke/flux-rt
-  newTag: sha-1ca31fb
+  newTag: sha-94561cb
