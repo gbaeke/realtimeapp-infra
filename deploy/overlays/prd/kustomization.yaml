@@ -23,7 +23,7 @@ patchesStrategicMerge:
                 cpu: 150m
                 memory: 150Mi
 replicas:
-- count: 3
+- count: 2
   name: realtime
 images:
 - name: gbaeke/flux-rt
